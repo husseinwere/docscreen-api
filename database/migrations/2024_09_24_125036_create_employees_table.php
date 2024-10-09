@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('employer_id');
+            $table->foreign('employer_id')->references('id')->on('employers');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('dob');
+            $table->string('email');
+            $table->boolean('is_internal');
+            $table->string('status')->default('ACTIVE');
             $table->timestamps();
         });
     }

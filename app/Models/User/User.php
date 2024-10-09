@@ -3,8 +3,11 @@
 namespace App\Models\User;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Admin\Admin;
+use App\Models\Employer\Employer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -20,12 +23,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'account_type',
-        'name',
-        'slug',
-        'phone',
         'email',
         'password',
-        'created_by',
         'status'
     ];
 
@@ -49,7 +48,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function created_by(): BelongsTo {
-        return $this->belongsTo(User::class, 'created_by');
+    public function admin(): HasOne {
+        return $this->hasOne(Admin::class);
+    }
+
+    public function employer(): HasOne {
+        return $this->hasOne(Employer::class);
     }
 }

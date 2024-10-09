@@ -1,6 +1,10 @@
 <?php
 
-use App\Http\Controllers\Upload\DocUploadController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Employee\EmployeeController;
+use App\Http\Controllers\Employee\SubmissionRequestController;
+use App\Http\Controllers\Employee\UploadController;
+use App\Http\Controllers\Employer\EmployerController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,26 +21,48 @@ use Illuminate\Support\Facades\Route;
 
 // AUTH/USERS
 Route::post('/auth/login', [UserController::class, 'login']);
-Route::get('/users/slug/{slug}', [UserController::class, 'getUserBySlug']);
+
+// EMPLOYERS
+Route::post('/employers', [EmployerController::class, 'store']);
 
 // UPLOADS
-Route::post('/uploads', [DocUploadController::class, 'store']);
+Route::get('/uploads', [UploadController::class, 'index']);
+Route::post('/uploads', [UploadController::class, 'store']);
+
+// SUBMISSION REQUESTS
+Route::get('/submission-requests', [SubmissionRequestController::class, 'index']);
+
+// EMPLOYEES
+Route::get('/employees/{id}', [EmployeeController::class, 'show']);
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
 
     // AUTH/USERS
     Route::get('/auth/logout', [UserController::class, 'logout']);
-    Route::resource('users', UserController::class);
-    Route::get('/users/{id}/reset-password', [UserController::class, 'resetPassword']);
+    Route::get('/auth/{id}/reset-password', [UserController::class, 'resetPassword']);
 
-    //UPLOADS
-    Route::get('/uploads', [DocUploadController::class, 'index']);
-    Route::put('/uploads/{id}', [DocUploadController::class, 'update']);
-    Route::delete('/uploads/{id}', [DocUploadController::class, 'destroy']);
-    Route::post('/uploads/request', [DocUploadController::class, 'requestUpload']);
-    Route::post('/uploads/bulk-request', [DocUploadController::class, 'bulkRequestUpload']);
+    // ADMINS
+    Route::resource('admins', AdminController::class);
+
+    // EMPLOYERS
+    Route::get('/employers', [EmployerController::class, 'index']);
+    Route::put('/employers/{id}', [EmployerController::class, 'update']);
+    Route::delete('/employers/{id}', [EmployerController::class, 'destroy']);
+
+    // UPLOADS
+    Route::put('/uploads/{id}', [UploadController::class, 'update']);
+    Route::delete('/uploads/{id}', [UploadController::class, 'destroy']);
+
+    // SUBMISSION REQUESTS
+    Route::post('/submission-requests', [SubmissionRequestController::class, 'store']);
+    Route::put('/submission-requests/{id}', [SubmissionRequestController::class, 'update']);
+    Route::delete('/submission-requests/{id}', [SubmissionRequestController::class, 'destroy']);
 
     //EMPLOYEES
-    Route::resource('employees', UserController::class);
+    Route::get('/employees', [EmployeeController::class, 'index']);
+    Route::post('/employees', [EmployeeController::class, 'store']);
+    Route::put('/employees/{id}', [EmployeeController::class, 'update']);
+    Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);
+    Route::post('/employees/bulk-create', [EmployeeController::class, 'storeBulk']);
 
 });

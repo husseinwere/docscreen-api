@@ -58,7 +58,7 @@
                 Hi {{$name}},
             </p>
             <p>
-                You are requested by {{$organization}} to upload a document at DOCUSCREEN. You will find more instructions at the page.
+                You are requested by {{$organization}} to submit a document at DOCUSCREEN. You will find more instructions at the page.
             </p>
             <p>Click the button below to access the upload portal.</p>
             <a href="{{$url}}" target="_blank"><button>GO TO DOCUSCREEN</button></a>
