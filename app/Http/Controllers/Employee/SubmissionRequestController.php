@@ -55,4 +55,63 @@ class SubmissionRequestController extends Controller
             return response(['message' => 'An unexpected error has occurred. Please try again'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function storeBulk(Request $request)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'employee_ids' => 'required|array',
+            'employee_ids.*' => 'required|integer|exists:employees,id',
+            'document_title' => 'required'
+        ]);
+
+        // Get the authenticated user
+        $user = User::find(Auth::id());
+
+        // Loop through each employee ID and create a submission request
+        foreach ($request->employee_ids as $employee_id) {
+            $data = [
+                'employee_id' => $employee_id,
+                'document_title' => $request->input('document_title')
+            ];
+
+            // Create a submission request for each employee
+            $createdRequest = SubmissionRequest::create($data);
+
+            if ($createdRequest) {
+                $employee = Employee::find($employee_id);
+
+                $url = env('FRONTEND_URL') . "employees/" . $employee_id;
+
+                $userDetails = [
+                    'name' => $employee->first_name,
+                    'email' => $employee->email,
+                    'organization' => $user->name,
+                    'url' => $url
+                ];
+
+                // Send email notification to each employee
+                Mail::to($employee->email)->send(new UploadRequested($userDetails));
+            }
+        }
+
+        // Return success response
+        return response(null, Response::HTTP_CREATED);
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $data = $request->all();
+
+        $request = SubmissionRequest::find($id);
+        $updatedRequest = $request->update($data);
+
+        if($updatedRequest) {
+            return response(null, Response::HTTP_OK);
+        }
+        else {
+            return response(['message' => 'An unexpected error has occurred. Please try again'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

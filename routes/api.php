@@ -55,6 +55,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     // SUBMISSION REQUESTS
     Route::post('/submission-requests', [SubmissionRequestController::class, 'store']);
+    Route::post('/submission-requests/bulk/store', [SubmissionRequestController::class, 'storeBulk']);
     Route::put('/submission-requests/{id}', [SubmissionRequestController::class, 'update']);
     Route::delete('/submission-requests/{id}', [SubmissionRequestController::class, 'destroy']);
 
