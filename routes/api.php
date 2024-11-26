@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Employee\DocumentTypeController;
 use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\Employee\SubmissionRequestController;
 use App\Http\Controllers\Employee\UploadController;
@@ -48,6 +49,9 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('/employers', [EmployerController::class, 'index']);
     Route::put('/employers/{id}', [EmployerController::class, 'update']);
     Route::delete('/employers/{id}', [EmployerController::class, 'destroy']);
+
+    // DOCUMENT TYPES
+    Route::resource('document-types', DocumentTypeController::class);
 
     // UPLOADS
     Route::put('/uploads/{id}', [UploadController::class, 'update']);

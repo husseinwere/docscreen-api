@@ -16,10 +16,11 @@ class Employee extends Model
         'dob',
         'email',
         'is_internal',
+        'ext_organization',
         'status'
     ];
 
     protected $casts = [
-        'is_internal' => 'boolean',
+        'is_internal' => 'boolean'
     ];
 }

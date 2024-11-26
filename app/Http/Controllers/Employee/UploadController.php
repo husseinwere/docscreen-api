@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee\Employee;
 use App\Models\Employee\SubmissionRequest;
 use App\Models\Employee\Upload;
 use Illuminate\Http\Request;
@@ -32,25 +33,30 @@ class UploadController extends Controller
         ]);
         $data = $request->all();
 
-        $upload = [
-            'employee_id' => $data['employee_id'],
-            'document_title' => $data['document_title'],
-        ];
+        if(!Employee::find($data['employee_id'])) {
+            $upload = [
+                'employee_id' => $data['employee_id'],
+                'document_title' => $data['document_title'],
+            ];
 
-        if($request->hasFile('document')) {
-            $document = $request->file('document');
-            $path = $document->store('uploads', 'public');
-            $docUrl = asset('storage/' . $path);
-            $upload['document'] = $docUrl;
-        }
+            if($request->hasFile('document')) {
+                $document = $request->file('document');
+                $path = $document->store('uploads', 'public');
+                $docUrl = asset('storage/' . $path);
+                $upload['document'] = $docUrl;
+            }
 
-        $createdUpload = Upload::create($upload);
+            $createdUpload = Upload::create($upload);
 
-        if($createdUpload){
-            return response(null, Response::HTTP_CREATED);
+            if($createdUpload){
+                return response(null, Response::HTTP_CREATED);
+            }
+            else {
+                return response(['message' => 'An unexpected error has occurred. Please try again'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
         }
         else {
-            return response(['message' => 'An unexpected error has occurred. Please try again'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response(['message' => 'Required parameters missing'], Response::HTTP_BAD_REQUEST);
         }
     }
 

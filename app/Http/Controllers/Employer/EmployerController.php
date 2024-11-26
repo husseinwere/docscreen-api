@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Employer;
 
 use App\Http\Controllers\Controller;
 use App\Mail\UserCreated;
+use App\Models\Employee\DocumentType;
 use App\Models\Employer\Employer;
 use App\Models\User\User;
 use Illuminate\Http\Request;
@@ -37,7 +38,13 @@ class EmployerController extends Controller
 
         if($user) {
             $fields['user_id'] = $user->id;
-            Employer::create($fields);
+            $employer = Employer::create($fields);
+
+            $diplomaType = [
+                'employer_id' => $employer->id,
+                'title' => 'DIPLOMA CERTIFICATE'
+            ];
+            DocumentType::create($diplomaType);
 
             $url = env('FRONTEND_URL') . "login";
 

@@ -49,5 +49,10 @@ class DatabaseSeeder extends Seeder
             'phone' => '3259356',
             'address' => '123Scott',
         ]);
+
+        DB::table('document_types')->insert([
+            'employer_id' => 1,
+            'title' => 'DIPLOMA CERTIFICATE'
+        ]);
     }
 }
