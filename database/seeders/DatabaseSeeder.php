@@ -32,27 +32,21 @@ class DatabaseSeeder extends Seeder
         DB::table('employers')->insert([
             'user_id' => 2,
             'email' => 'austin.post@tezi.co.ke',
-            'name' => 'Austin Post',
             'phone' => '3256356',
+            'first_name' => 'Austin',
+            'last_name' => 'Post',
+            'function' => '123Austin',
+            'billing_email' => 'sdkfl@djkf.dc',
+            'kvk_number' => '123Austin',
+            'organization' => '123Austin',
             'address' => '123Austin',
-        ]);
-
-        DB::table('users')->insert([
-            'email' => 'travis.scott@tezi.co.ke',
-            'account_type' => 'EMPLOYER',
-            'password' => '$2a$12$Lx.UD20iAN1SG9iLwUr0g.3WijIyOKJPIpR.3dtqcRDb9dbD6u8UK'
-        ]);
-        DB::table('employers')->insert([
-            'user_id' => 3,
-            'email' => 'travis.scott@tezi.co.ke',
-            'name' => 'Travis Scott',
-            'phone' => '3259356',
-            'address' => '123Scott',
+            'location' => '123Austin',
+            'postcode' => '123Austin'
         ]);
 
         DB::table('document_types')->insert([
             'employer_id' => 1,
-            'title' => 'DIPLOMA CERTIFICATE'
+            'title' => 'DUO DIPLOMA UITTREKSEL'
         ]);
     }
 }

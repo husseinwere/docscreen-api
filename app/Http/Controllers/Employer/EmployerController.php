@@ -23,10 +23,18 @@ class EmployerController extends Controller
 
     public function store(Request $request) {
         $fields = $request->validate([
-            'name' => 'required|string',
             'email' => 'required|string|unique:users,email',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|string',
             'phone' => 'required|string',
-            'address' => 'required|string'
+            'function' => 'required|string',
+            'billing_email' => 'required|string',
+            'kvk_number' => 'required|string',
+            'organization' => 'required|string',
+            'address' => 'required|string',
+            'location' => 'required|string',
+            'postcode' => 'required|string'
         ]);
 
         $password = str_pad(random_int(11, 9999), 4, '0', STR_PAD_LEFT);
@@ -42,14 +50,14 @@ class EmployerController extends Controller
 
             $diplomaType = [
                 'employer_id' => $employer->id,
-                'title' => 'DIPLOMA CERTIFICATE'
+                'title' => 'DUO DIPLOMA UITTREKSEL'
             ];
             DocumentType::create($diplomaType);
 
             $url = env('FRONTEND_URL') . "login";
 
             $accountCredentials = [
-                'name' => $fields['name'],
+                'name' => $fields['first_name'],
                 'email' => $user->email,
                 'password' => $password,
                 'url' => $url

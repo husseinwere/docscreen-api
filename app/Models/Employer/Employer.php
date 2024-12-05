@@ -11,10 +11,18 @@ class Employer extends Model
 
     protected $fillable = [
         'user_id',
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'phone',
+        'function',
+        'billing_email',
+        'kvk_number',
+        'organization',
         'address',
+        'location',
+        'postcode',
+        'package',
         'status'
     ];
 }

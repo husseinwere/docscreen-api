@@ -64,7 +64,7 @@ class DocumentTypeController extends Controller
     public function destroy(string $id)
     {
         $type = DocumentType::find($id);
-        if($type->title != 'DIPLOMA CERTIFICATE' && $type->delete()) {
+        if($type->title != 'DUO DIPLOMA UITTREKSEL' && $type->delete()) {
             return response(null, Response::HTTP_NO_CONTENT);
         }
         else {

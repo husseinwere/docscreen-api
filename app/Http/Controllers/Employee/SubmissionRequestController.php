@@ -38,7 +38,7 @@ class SubmissionRequestController extends Controller
             $user = User::find(Auth::id());
             $employee = Employee::find($data['employee_id']);
 
-            $url = $data['document_title'] == 'DIPLOMA CERTIFICATE' ? env('VERIFICATION_URL') . "?id=" . $data['employee_id'] : env('FRONTEND_URL') . "employees/" . $data['employee_id'];
+            $url = $data['document_title'] == 'DUO DIPLOMA UITTREKSEL' ? env('VERIFICATION_URL') . "?id=" . $data['employee_id'] : env('FRONTEND_URL') . "employees/" . $data['employee_id'];
             
             $userDetails = [
                 'name' => $employee->first_name,
@@ -81,7 +81,7 @@ class SubmissionRequestController extends Controller
             if ($createdRequest) {
                 $employee = Employee::find($employee_id);
 
-                $url = $data['document_title'] == 'DIPLOMA CERTIFICATE' ? env('VERIFICATION_URL') . "?id=" . $employee_id : env('FRONTEND_URL') . "employees/" . $employee_id;
+                $url = $data['document_title'] == 'DUO DIPLOMA UITTREKSEL' ? env('VERIFICATION_URL') . "?id=" . $employee_id : env('FRONTEND_URL') . "employees/" . $employee_id;
 
                 $userDetails = [
                     'name' => $employee->first_name,
