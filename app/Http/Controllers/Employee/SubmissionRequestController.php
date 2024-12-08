@@ -35,7 +35,7 @@ class SubmissionRequestController extends Controller
         $createdRequest = SubmissionRequest::create($data);
 
         if($createdRequest){
-            $employer = Employer::where('id', Auth::id())->first();
+            $employer = Employer::where('user_id', Auth::id())->first();
             $employee = Employee::find($data['employee_id']);
 
             $url = $data['document_title'] == 'DUO DIPLOMA UITTREKSEL' ? env('VERIFICATION_URL') . "?id=" . $data['employee_id'] : env('FRONTEND_URL') . "employees/" . $data['employee_id'];
@@ -66,7 +66,7 @@ class SubmissionRequestController extends Controller
         ]);
 
         // Get the authenticated user
-        $employer = Employer::where('id', Auth::id())->first();
+        $employer = Employer::where('user_id', Auth::id())->first();
 
         // Loop through each employee ID and create a submission request
         foreach ($request->employee_ids as $employee_id) {
