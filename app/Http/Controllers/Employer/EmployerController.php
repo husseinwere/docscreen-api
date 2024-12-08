@@ -21,6 +21,11 @@ class EmployerController extends Controller
         return Employer::where('status', 'ACTIVE')->paginate($pageSize, ['*'], 'page', $pageIndex);
     }
 
+    public function show(string $id)
+    {
+        return Employer::find($id);
+    }
+
     public function store(Request $request) {
         $fields = $request->validate([
             'email' => 'required|string|unique:users,email',

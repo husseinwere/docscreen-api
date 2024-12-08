@@ -60,10 +60,11 @@ class UserController extends Controller
 
         $user->password = $encryptedPassword;
         $userDetails = $user->account_type == 'ADMIN' ? $user->admin : $user->employer;
+        $name = $user->account_type == 'ADMIN' ? $userDetails->name : $userDetails->first_name;
 
         if($user->save()) {
             $accountCredentials = [
-                'name' => $userDetails->name,
+                'name' => $name,
                 'email' => $user->email,
                 'password' => $password,
                 'url' => env('FRONTEND_URL')

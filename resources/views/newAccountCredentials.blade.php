@@ -19,13 +19,8 @@
                 border: 1px solid #ccc;
             }
 
-            .logo {
-                font-weight: bold;
-                font-size: 22px;
-            }
-
-            .logo span {
-                color: #00a8ff;
+            .logo img {
+                width: 160px;
             }
 
             p {
@@ -52,7 +47,7 @@
     <body>
         <div id="mail">
             <div class="logo">
-                DOCU<span>SCREEN</span>
+                <img src="{{ asset('images/logo.png') }}">
             </div>
             <p>
                 Hi {{$name}},

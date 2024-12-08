@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\UploadRequested;
 use App\Models\Employee\Employee;
 use App\Models\Employee\SubmissionRequest;
-use App\Models\User\User;
+use App\Models\Employer\Employer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +35,7 @@ class SubmissionRequestController extends Controller
         $createdRequest = SubmissionRequest::create($data);
 
         if($createdRequest){
-            $user = User::find(Auth::id());
+            $employer = Employer::where('id', Auth::id())->first();
             $employee = Employee::find($data['employee_id']);
 
             $url = $data['document_title'] == 'DUO DIPLOMA UITTREKSEL' ? env('VERIFICATION_URL') . "?id=" . $data['employee_id'] : env('FRONTEND_URL') . "employees/" . $data['employee_id'];
@@ -43,7 +43,7 @@ class SubmissionRequestController extends Controller
             $userDetails = [
                 'name' => $employee->first_name,
                 'email' => $employee->email,
-                'organization' => $user->name,
+                'organization' => $employer->organization,
                 'url' => $url
             ];
             
@@ -66,7 +66,7 @@ class SubmissionRequestController extends Controller
         ]);
 
         // Get the authenticated user
-        $user = User::find(Auth::id());
+        $employer = Employer::where('id', Auth::id())->first();
 
         // Loop through each employee ID and create a submission request
         foreach ($request->employee_ids as $employee_id) {
@@ -86,7 +86,7 @@ class SubmissionRequestController extends Controller
                 $userDetails = [
                     'name' => $employee->first_name,
                     'email' => $employee->email,
-                    'organization' => $user->name,
+                    'organization' => $employer->organization,
                     'url' => $url
                 ];
 
