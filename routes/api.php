@@ -6,6 +6,7 @@ use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\Employee\SubmissionRequestController;
 use App\Http\Controllers\Employee\UploadController;
 use App\Http\Controllers\Employer\EmployerController;
+use App\Http\Controllers\Employer\RequestLogController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,7 @@ Route::post('/auth/login', [UserController::class, 'login']);
 
 // EMPLOYERS
 Route::post('/employers', [EmployerController::class, 'store']);
+Route::get('/request-logs/count/{id}', [RequestLogController::class, 'incrementRequestCount']);
 
 // UPLOADS
 Route::get('/uploads', [UploadController::class, 'index']);
@@ -50,6 +52,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('/employers/{id}', [EmployerController::class, 'show']);
     Route::put('/employers/{id}', [EmployerController::class, 'update']);
     Route::delete('/employers/{id}', [EmployerController::class, 'destroy']);
+    Route::get('/request-logs/{id}', [RequestLogController::class, 'index']);
 
     // DOCUMENT TYPES
     Route::resource('document-types', DocumentTypeController::class);
