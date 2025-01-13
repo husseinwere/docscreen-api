@@ -33,7 +33,7 @@ class UploadController extends Controller
         ]);
         $data = $request->all();
 
-        if(!Employee::find($data['employee_id'])) {
+        if(Employee::find($data['employee_id'])) {
             $upload = [
                 'employee_id' => $data['employee_id'],
                 'document_title' => $data['document_title'],
